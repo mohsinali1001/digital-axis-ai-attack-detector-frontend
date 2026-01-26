@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Key, Copy, Plus, Trash2, Eye, EyeOff } from "lucide-react";
 import API from "../../api/api";
+import { getApiUrl } from "../../config/apiConfig";
 import { useToast } from "../Toast/Toast";
 
 const APIAccess = () => {
@@ -57,7 +58,7 @@ const APIAccess = () => {
     toast.success("Copied to clipboard!");
   };
 
-  const API_ENDPOINT = "http://localhost:5000/api/predict";
+  const API_ENDPOINT = getApiUrl("/predict");
 
   return (
     <div className="space-y-6">

@@ -16,7 +16,6 @@ import Privacy from "./components/LandingPage/Privacy";
 import LandingDocs from "./components/LandingPage/Documentation";
 import Blog from "./components/LandingPage/Blog";
 import CaseStudies from "./components/LandingPage/CaseStudies";
-import "./index.css";
 
 function App() {
   return (

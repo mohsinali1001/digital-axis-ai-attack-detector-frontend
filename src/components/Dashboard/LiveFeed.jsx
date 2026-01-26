@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { io } from "socket.io-client";
 import { Radio, AlertTriangle, CheckCircle } from "lucide-react";
+import { getSocketUrl } from "../../config/apiConfig";
 
 const LiveFeed = () => {
   const [events, setEvents] = useState([]);
@@ -15,7 +16,8 @@ const LiveFeed = () => {
     if (!token || !userId) return;
 
     // Connect to Socket.IO
-    socketRef.current = io("http://localhost:5000", {
+    const socketUrl = getSocketUrl();
+    socketRef.current = io(socketUrl, {
       auth: { token },
     });
 

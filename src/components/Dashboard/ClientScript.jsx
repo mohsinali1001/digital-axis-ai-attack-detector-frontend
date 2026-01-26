@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Code, Copy, Check } from "lucide-react";
 import API from "../../api/api";
+import { getApiUrl } from "../../config/apiConfig";
 import { useToast } from "../Toast/Toast";
 
 const ClientScript = () => {
@@ -28,7 +29,7 @@ const ClientScript = () => {
     }
   };
 
-  const API_URL = "http://localhost:5000/api/predict";
+  const API_URL = getApiUrl("/predict");
   const script = `(function(){
   const API_URL = "${API_URL}";
   const API_KEY = "${selectedKey}";

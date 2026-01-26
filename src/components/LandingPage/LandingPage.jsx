@@ -1,4 +1,4 @@
-import "../../App.css"; // ensure Tailwind directives are loaded
+import "../../App.css";
 import PageHead from "../PageHead/PageHead";
 import Features from "./Features";
 import Footer from "./Footer";

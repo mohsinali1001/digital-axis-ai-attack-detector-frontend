@@ -1,11 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* optional small default to confirm Tailwind is active */
-html, body, #root {
-  height: 100%;
-}
+/* Custom App styles - Tailwind directives are in index.css */
 body {
-  @apply bg-white text-gray-900;
+  background-color: white;
+  color: rgb(17, 24, 39);
 }

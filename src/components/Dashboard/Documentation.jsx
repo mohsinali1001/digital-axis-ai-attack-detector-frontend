@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Book, Code, AlertCircle, CheckCircle } from "lucide-react";
+import { getApiUrl } from "../../config/apiConfig";
 
 const Documentation = () => {
   return (
@@ -49,7 +50,9 @@ const Documentation = () => {
             <h3 className="text-lg font-semibold text-white mb-2">POST /api/predict</h3>
             <p className="text-gray-400 mb-2">Send a prediction request with network and security data.</p>
             <div className="bg-gray-900 rounded-lg p-4">
-              <code className="text-green-400">http://localhost:5000/api/predict</code>
+              <code className="text-green-400">
+                {getApiUrl("/predict")}
+              </code>
             </div>
           </div>
 
@@ -174,7 +177,7 @@ const Documentation = () => {
       >
         <h2 className="text-2xl font-semibold text-white mb-4">Example cURL Request</h2>
         <pre className="bg-gray-900 rounded-lg p-4 overflow-x-auto text-sm">
-          <code className="text-gray-300">{`curl -X POST http://localhost:5000/api/predict \\
+          <code className="text-gray-300">{`curl -X POST ${getApiUrl("/predict")} \\
   -H "Content-Type: application/json" \\
   -H "x-api-key: YOUR_API_KEY" \\
   -d '{
