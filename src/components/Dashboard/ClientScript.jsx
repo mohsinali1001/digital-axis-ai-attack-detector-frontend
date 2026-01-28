@@ -39,7 +39,7 @@ const ClientScript = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-api-key": API_KEY
+        "X-API-Key": API_KEY
       },
       body: JSON.stringify(payload)
     }).catch(()=>{/* silent */});

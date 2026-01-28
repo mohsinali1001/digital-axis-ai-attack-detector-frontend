@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Key, Copy, Plus, Trash2, Eye, EyeOff } from "lucide-react";
+import { Key, Copy, Plus, Trash2, Eye, EyeOff, RefreshCw } from "lucide-react";
 import API from "../../api/api";
 import { getApiUrl } from "../../config/apiConfig";
 import { useToast } from "../Toast/Toast";
@@ -50,6 +50,20 @@ const APIAccess = () => {
       fetchKeys();
     } catch (error) {
       toast.error("Failed to delete API key");
+    }
+  };
+
+  const regenerateKey = async (keyId) => {
+    if (!window.confirm("Regenerate this API key? The old key will stop working immediately.")) return;
+
+    try {
+      const res = await API.put(`/apikeys/${keyId}/regenerate`);
+      setNewKey(res.data.key.key);
+      setShowNewKey(true);
+      toast.success("API key regenerated successfully");
+      fetchKeys();
+    } catch (error) {
+      toast.error(error.response?.data?.error || "Failed to regenerate API key");
     }
   };
 
@@ -175,13 +189,29 @@ const APIAccess = () => {
                     Created: {new Date(key.created_at).toLocaleDateString()}
                   </p>
                 </div>
-                <button
-                  onClick={() => copyToClipboard(key.key)}
-                  className="p-2 text-gray-400 hover:text-white transition-colors"
-                  title="Copy key"
-                >
-                  <Copy size={16} />
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => regenerateKey(key.id)}
+                    className="p-2 text-blue-400 hover:text-blue-300 transition-colors"
+                    title="Regenerate key"
+                  >
+                    <RefreshCw size={16} />
+                  </button>
+                  <button
+                    onClick={() => copyToClipboard(key.key)}
+                    className="p-2 text-gray-400 hover:text-white transition-colors"
+                    title="Copy key"
+                  >
+                    <Copy size={16} />
+                  </button>
+                  <button
+                    onClick={() => deleteKey(key.id)}
+                    className="p-2 text-red-400 hover:text-red-300 transition-colors"
+                    title="Delete key"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -214,7 +244,7 @@ const APIAccess = () => {
           <div>
             <label className="text-sm text-gray-400 mb-1 block">Header:</label>
             <code className="block bg-gray-900 rounded-lg px-4 py-2 text-blue-400">
-              x-api-key: YOUR_API_KEY
+              X-API-Key: YOUR_API_KEY
             </code>
           </div>
           <div>
@@ -222,7 +252,7 @@ const APIAccess = () => {
             <pre className="bg-gray-900 rounded-lg px-4 py-2 text-sm text-gray-300 overflow-x-auto">
               {`curl -X POST ${API_ENDPOINT} \\
   -H "Content-Type: application/json" \\
-  -H "x-api-key: YOUR_API_KEY" \\
+  -H "X-API-Key: YOUR_API_KEY" \\
   -d '{
     "network_packet_size": 1500,
     "protocol_type": "TCP",
