@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Code, Copy, Check } from "lucide-react";
 import API from "../../api/api";
@@ -11,11 +11,7 @@ const ClientScript = () => {
   const [copied, setCopied] = useState(false);
   const toast = useToast();
 
-  useEffect(() => {
-    fetchKeys();
-  }, []);
-
-  const fetchKeys = async () => {
+  const fetchKeys = useCallback(async () => {
     try {
       const res = await API.get("/apikeys");
       setKeys(res.data.keys);
@@ -27,7 +23,11 @@ const ClientScript = () => {
     } catch (error) {
       toast.error("Failed to load API keys");
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchKeys();
+  }, [fetchKeys]);
 
   const API_URL = getApiUrl("/predict");
   const script = `(function(){

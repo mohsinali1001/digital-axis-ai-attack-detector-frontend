@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Key, Copy, Plus, Trash2, Eye, EyeOff, RefreshCw } from "lucide-react";
+import { Key, Copy, Plus, Trash2, RefreshCw } from "lucide-react";
 import API from "../../api/api";
 import { getApiUrl } from "../../config/apiConfig";
 import { useToast } from "../Toast/Toast";
@@ -13,11 +13,7 @@ const APIAccess = () => {
   const [newKeyLabel, setNewKeyLabel] = useState("");
   const toast = useToast();
 
-  useEffect(() => {
-    fetchKeys();
-  }, []);
-
-  const fetchKeys = async () => {
+  const fetchKeys = useCallback(async () => {
     try {
       const res = await API.get("/apikeys");
       setKeys(res.data.keys);
@@ -26,7 +22,11 @@ const APIAccess = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchKeys();
+  }, [fetchKeys]);
 
   const createKey = async () => {
     try {

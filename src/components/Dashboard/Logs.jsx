@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { BarChart3, Filter, Calendar } from "lucide-react";
+import { Filter } from "lucide-react";
 import API from "../../api/api";
 import { useToast } from "../Toast/Toast";
 import {
@@ -22,11 +22,7 @@ const Logs = () => {
   const [filter, setFilter] = useState("all");
   const toast = useToast();
 
-  useEffect(() => {
-    fetchPredictions();
-  }, [filter]);
-
-  const fetchPredictions = async () => {
+  const fetchPredictions = useCallback(async () => {
     try {
       let url = "/dashboard/predictions?limit=100";
       if (filter !== "all") {
@@ -48,7 +44,11 @@ const Logs = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filter, toast]);
+
+  useEffect(() => {
+    fetchPredictions();
+  }, [fetchPredictions]);
 
   // Prepare chart data
   const chartData = predictions
@@ -209,11 +209,10 @@ const Logs = () => {
                       </td>
                       <td className="py-3 px-4">
                         <span
-                          className={`px-2 py-1 rounded text-sm font-medium ${
-                            isAttack
-                              ? "bg-red-500/10 text-red-400"
-                              : "bg-green-500/10 text-green-400"
-                          }`}
+                          className={`px-2 py-1 rounded text-sm font-medium ${isAttack
+                            ? "bg-red-500/10 text-red-400"
+                            : "bg-green-500/10 text-green-400"
+                            }`}
                         >
                           {isAttack ? "Attack" : "Safe"}
                         </span>

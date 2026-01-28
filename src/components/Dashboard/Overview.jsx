@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Activity, Shield, AlertTriangle, Clock } from "lucide-react";
 import API from "../../api/api";
@@ -10,21 +10,20 @@ const Overview = () => {
   const [loading, setLoading] = useState(true);
   const toast = useToast();
 
-  useEffect(() => {
-    fetchOverview();
-  }, []);
-
-  const fetchOverview = async () => {
+  const fetchOverview = useCallback(async () => {
     try {
       const res = await API.get("/dashboard/overview");
       setOverview(res.data);
     } catch (error) {
       toast.error("Failed to load overview data");
-      console.error(error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchOverview();
+  }, [fetchOverview]);
 
   if (loading) {
     return (
@@ -114,13 +113,13 @@ const Overview = () => {
               <span
                 className={
                   overview.latest_prediction.prediction?.attack_detected ||
-                  overview.latest_prediction.prediction?.prediction === 1
+                    overview.latest_prediction.prediction?.prediction === 1
                     ? "text-red-400 font-semibold"
                     : "text-green-400 font-semibold"
                 }
               >
                 {overview.latest_prediction.prediction?.attack_detected ||
-                overview.latest_prediction.prediction?.prediction === 1
+                  overview.latest_prediction.prediction?.prediction === 1
                   ? "Yes"
                   : "No"}
               </span>

@@ -70,7 +70,6 @@ const SignUp = () => {
       toast.error(
         err.response?.data?.error || "Signup failed. Please try again."
       );
-      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -119,11 +118,10 @@ const SignUp = () => {
                 autoComplete="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`block w-full pl-10 pr-3 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
-                  errors.name
+                className={`block w-full pl-10 pr-3 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${errors.name
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-700 focus:ring-blue-500"
-                }`}
+                  }`}
                 placeholder="John Doe"
               />
             </div>
@@ -151,11 +149,10 @@ const SignUp = () => {
                 autoComplete="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`block w-full pl-10 pr-3 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
-                  errors.email
+                className={`block w-full pl-10 pr-3 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${errors.email
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-700 focus:ring-blue-500"
-                }`}
+                  }`}
                 placeholder="you@example.com"
               />
             </div>
@@ -183,11 +180,10 @@ const SignUp = () => {
                 autoComplete="new-password"
                 value={formData.password}
                 onChange={handleChange}
-                className={`block w-full pl-10 pr-10 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
-                  errors.password
+                className={`block w-full pl-10 pr-10 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${errors.password
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-700 focus:ring-blue-500"
-                }`}
+                  }`}
                 placeholder="At least 8 characters"
               />
               <button
@@ -222,11 +218,10 @@ const SignUp = () => {
                 autoComplete="new-password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className={`block w-full pl-10 pr-10 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${
-                  errors.confirmPassword
+                className={`block w-full pl-10 pr-10 py-3 bg-gray-800 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 ${errors.confirmPassword
                     ? "border-red-500 focus:ring-red-500"
                     : "border-gray-700 focus:ring-blue-500"
-                }`}
+                  }`}
                 placeholder="Confirm your password"
               />
               <button
